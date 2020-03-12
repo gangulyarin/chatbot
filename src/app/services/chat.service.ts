@@ -9,9 +9,12 @@ export class ChatService{
 
   utterences:Utterence[]=[];
     constructor(private http:HttpClient){}
-    
+
+    sendVoice(){
+      return this.http.post('api/voice',window.localStorage.getItem('key'))
+    }
     sendChat(inputData:Input){
-      
+
         return this.http.post('api/AskWatson',inputData)
     }
 
@@ -34,7 +37,7 @@ export class ChatService{
           const headers = new HttpHeaders().set('Content-Type', 'application/json');
           this.http.post('http://localhost:3010/PlayAudio', { msg: b_msg, input: input }, { headers, responseType: 'blob' }).subscribe(response => {
             //console.log(response);
-            var blob = response; // read the blob object data from the response 
+            var blob = response; // read the blob object data from the response
             var audio = new Audio();
             console.log('processing');
             audio.pause();
@@ -46,5 +49,5 @@ export class ChatService{
           console.log(e);
         }
       }*/
-    
+
 }

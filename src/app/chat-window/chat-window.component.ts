@@ -4,27 +4,22 @@ import { Input } from '../model/input.model';
 import { ChatService } from '../services/chat.service';
 import { Router } from '@angular/router';
 import { Utterence } from '../model/utterence.model';
-
+import { Renderer2, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
 export class ChatWindowComponent implements OnInit {
-
+  audioURL:any;
   user_dp:string;
   userOpt:string;
   userInput:string;
   opt:any;
   input:Input;
-
+  test:any;
   WatsonRes: any;
-
-  texttospeechToken: any;
-  audioWatson: any;
-  WatsonResToneAnalyser: any;
-  WatsonResDiscovery: any;
-  WatsonResNLU: any;
 
   public currentIntent = "";
 
@@ -33,6 +28,10 @@ export class ChatWindowComponent implements OnInit {
 
 
   addItem(value:string){
+    console.log(window.localStorage.getItem('key'));
+    this.chatService.sendVoice();
+    console.log(this.audioURL); 
+    console.log("+++++++++");
     if(this.userOpt!=null)
     {
       for (var j = 0; j < this.opt.length; j++){
@@ -92,10 +91,10 @@ export class ChatWindowComponent implements OnInit {
     console.log(this.data);
   }
 
-  constructor(private chatService:ChatService, private router:Router) {
+  constructor(private chatService:ChatService, private router:Router, private renderer2: Renderer2,@Inject(DOCUMENT) private _document) {
     this.user_dp='assets/images/user.jpg';
     this.input = { session_id: "", userID: 0,  assistant_id: "", question: "" };
-    this.input.assistant_id='b4e71061-5863-485b-ab88-bf0358627cfa';
+    this.input.assistant_id='761ff0b8-ba71-432d-8d78-e524a70643e2';
     this.chatService.createSession(this.input).subscribe(response=>{
         this.WatsonRes = response;
         this.data = [];
@@ -111,7 +110,13 @@ export class ChatWindowComponent implements OnInit {
     })
    }
 
+
   ngOnInit() {
+    const s = this.renderer2.createElement('script');
+    s.type = 'text/javascript';
+    s.src = 'assets/js/VoiceInput.js';
+    s.text = ``;
+    this.renderer2.appendChild(this._document.body, s);
   }
 
 
