@@ -13,7 +13,7 @@ import { DOCUMENT } from '@angular/platform-browser';
   styleUrls: ['./chat-window.component.css']
 })
 export class ChatWindowComponent implements OnInit {
-
+  audioURL:any;
   user_dp:string;
   userOpt:string;
   userInput:string;
