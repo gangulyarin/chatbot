@@ -29,8 +29,6 @@ export class ChatWindowComponent implements OnInit {
 
 
   addItem(value:string){
-    console.log(this.test);
-    console.log("+++++++++");
     if(this.userOpt!=null)
     {
       for (var j = 0; j < this.opt.length; j++){
