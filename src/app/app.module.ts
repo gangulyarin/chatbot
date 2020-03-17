@@ -24,7 +24,7 @@ import { SentimentAnalysisComponent } from './sentiment-analysis/sentiment-analy
     HttpClientModule,
     FormsModule
   ],
-  providers: [ChatService, AuthGuard],
+  providers: [ChatService, AuthGuard,SentimentAnalysisComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

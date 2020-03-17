@@ -26,10 +26,10 @@ export class SentimentAnalysisComponent implements OnInit {
   }
 
   getSentiment(){
-    
+
     this.chatService.toneAnalyzer().subscribe(resp=>{
       const watsonResp = JSON.parse(JSON.stringify(resp, null, 2));
-     
+
       this.totalUtterence = watsonResp.result.utterances_tone.length;
       for(let i=0;i<watsonResp.result.utterances_tone.length; i++){
         for(let j =0;j<watsonResp.result.utterances_tone[i].tones.length;j++){

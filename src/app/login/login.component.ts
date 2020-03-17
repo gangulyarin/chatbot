@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     if(this.email==='admin' && this.password==='admin'){
-      localStorage.setItem('user',this.email);
+      localStorage.setItem('userID',this.email);
       this.router.navigate(['/']);
     }
     else{
