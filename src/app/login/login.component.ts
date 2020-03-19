@@ -17,13 +17,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    if(this.email==='admin' && this.password==='admin'){
       localStorage.setItem('userID',this.email);
+      localStorage.setItem('pass',this.password);
+
       this.router.navigate(['/']);
-    }
-    else{
-      alert("Wrong Email/Password")
-    }
+
+
+
   }
 
 }

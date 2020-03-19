@@ -123,7 +123,8 @@ export class ChatWindowComponent implements OnInit {
 
 
   logout(){
-    localStorage.removeItem('user');
+    localStorage.removeItem('userID');
+    localStorage.removeItem('pass');
     this.router.navigate(['/login'])
 
   }

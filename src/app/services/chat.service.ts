@@ -14,7 +14,9 @@ export class ChatService{
 
         return this.http.post('api/AskWatson',inputData)
     }
-
+    verify(){
+      return this.http.post('api/Verify',null)
+    }
     createSession(){
         return this.http.post('api/CreateSession',null)
     }
