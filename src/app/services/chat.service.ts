@@ -10,16 +10,15 @@ export class ChatService{
   utterences:Utterence[]=[];
     constructor(private http:HttpClient){}
 
-    sendVoice(){
-      return this.http.post('api/voice',window.localStorage.getItem('key'))
-    }
     sendChat(inputData:Input){
 
         return this.http.post('api/AskWatson',inputData)
     }
-
-    createSession(input:Input){
-        return this.http.post('api/CreateSession', input)
+    verify(){
+      return this.http.post('api/Verify',null)
+    }
+    createSession(){
+        return this.http.post('api/CreateSession',null)
     }
 
     toneAnalyzer(){

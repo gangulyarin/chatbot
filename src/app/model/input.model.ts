@@ -1,7 +1,7 @@
 export class Input{
     session_id: string;
-    userID: number;
+    userID: string;
     //department: string;
-    assistant_id:string;
+    //assistant_id:string;
     question: string;
 }

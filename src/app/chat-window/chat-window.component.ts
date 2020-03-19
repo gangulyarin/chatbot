@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chat } from '../model/chat.model';
 import { Input } from '../model/input.model';
 import { ChatService } from '../services/chat.service';
+import { SentimentAnalysisComponent } from '../sentiment-analysis/sentiment-analysis.component';
 import { Router } from '@angular/router';
 import { Utterence } from '../model/utterence.model';
 import { Renderer2, Inject } from '@angular/core';
@@ -28,10 +29,6 @@ export class ChatWindowComponent implements OnInit {
 
 
   addItem(value:string){
-    console.log(window.localStorage.getItem('key'));
-    this.chatService.sendVoice();
-    console.log(this.audioURL); 
-    console.log("+++++++++");
     if(this.userOpt!=null)
     {
       for (var j = 0; j < this.opt.length; j++){
@@ -56,7 +53,7 @@ export class ChatWindowComponent implements OnInit {
         this.WatsonRes = response;
 
         this.WatsonRes = this.WatsonRes.result;
-        console.log("response ", this.WatsonRes);
+        console.log("response ",  this.WatsonRes);
 
 
         if (this.WatsonRes.output.intents !== undefined && this.WatsonRes.output.intents.length > 0) {
@@ -75,6 +72,10 @@ export class ChatWindowComponent implements OnInit {
             this.data.push({ type: "answer", text: String(this.WatsonRes.output.generic[i].text), options: [], feedback: true });
             //this.utterances.push({user:"agent", text:String(this.WatsonRes.output.generic[i].text)})
             this.chatService.pushUtterences({user:"agent", text:String(this.WatsonRes.output.generic[i].text)});
+            if(this.WatsonRes.output.generic[i].text=='You will be redirected to an agent by clicking the link below.')
+            {
+              this.sentimentAnalysisComponent.getSentiment();
+            }
           }
 
           if (this.WatsonRes.output.generic[i].response_type == 'option'){
@@ -91,11 +92,10 @@ export class ChatWindowComponent implements OnInit {
     console.log(this.data);
   }
 
-  constructor(private chatService:ChatService, private router:Router, private renderer2: Renderer2,@Inject(DOCUMENT) private _document) {
+  constructor(private sentimentAnalysisComponent:SentimentAnalysisComponent,private chatService:ChatService, private router:Router, private renderer2: Renderer2,@Inject(DOCUMENT) private _document) {
     this.user_dp='assets/images/user.jpg';
-    this.input = { session_id: "", userID: 0,  assistant_id: "", question: "" };
-    this.input.assistant_id='761ff0b8-ba71-432d-8d78-e524a70643e2';
-    this.chatService.createSession(this.input).subscribe(response=>{
+    this.input = { session_id: "", userID: "", question: "" };
+    this.chatService.createSession().subscribe(response=>{
         this.WatsonRes = response;
         this.data = [];
         //this.utterances=[];
@@ -106,23 +106,25 @@ export class ChatWindowComponent implements OnInit {
         this.chatService.pushUtterences({user:"agent", text:"Hey, How can I help you"});
         this.input.session_id = this.WatsonRes.result.session_id;
         console.log("Session ID:",this.input.session_id)
-        this.input.userID = Math.floor(Math.random() * 50);
+        this.input.userID = localStorage.getItem('userID');
+        console.log(this.input.userID);
     })
    }
 
 
   ngOnInit() {
-    const s = this.renderer2.createElement('script');
+    /*const s = this.renderer2.createElement('script');
     s.type = 'text/javascript';
     s.src = 'assets/js/VoiceInput.js';
     s.text = ``;
-    this.renderer2.appendChild(this._document.body, s);
+    this.renderer2.appendChild(this._document.body, s);*/
   }
 
 
 
   logout(){
-    localStorage.removeItem('user');
+    localStorage.removeItem('userID');
+    localStorage.removeItem('pass');
     this.router.navigate(['/login'])
 
   }

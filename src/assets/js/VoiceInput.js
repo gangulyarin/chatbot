@@ -1,4 +1,4 @@
-const record = document.getElementById('record');
+/*const record = document.getElementById('record');
 const stop = document.getElementById('stop');
 const soundClips = document.getElementById('sound-clips');
 
@@ -45,26 +45,19 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("data available after MediaRecorder.stop() called.");
 
       const audio = document.createElement('audio');
-      const pa = document.createElement('p');
       audio.setAttribute('controls', '');
       soundClips.appendChild(audio);
 
       audio.controls = true;
       const blob = new Blob(chunks, {
-        type: 'audio/mpeg-3'
+        'type': 'audio/ogg; codecs=opus'
       });
-      window.localStorage.setItem('key', blob);
-      console.log(window.localStorage.getItem('key'));
-
       chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
-      var t = document.createTextNode(audioURL);
-      pa.appendChild(t);
-
-      soundClips.appendChild(pa);
       audio.src = audioURL;
-      console.log(this.audio);
 
+      soundClips.appendChild(audio);
+      audio.setAttribute("ng-model", "test=audioURL");
       console.log("recorder stopped");
     }
 
@@ -76,4 +69,4 @@ if (navigator.mediaDevices.getUserMedia) {
 
 } else {
   console.log('getUserMedia not supported on your browser!');
-}
+}*/
